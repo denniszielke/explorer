@@ -5,7 +5,7 @@ var app = express();
 var port = process.env.PORT || process.env.port || 3000;
 
 console.log(path.join(__dirname, '/app'));
-app.use("/", express.static(path.join(__dirname, "/")));
+app.use("/app", express.static(path.join(__dirname, "/app")));
 
 // Set up our one route to the index.html file.
 app.get('*', function (req, res) {
