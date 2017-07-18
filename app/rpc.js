@@ -1,0 +1,1 @@
+window.remoteRpcUrl = 'http://default.westeurope.cloudapp.azure.com:8545';
