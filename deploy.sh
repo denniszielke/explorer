@@ -125,15 +125,15 @@ if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
   cd "$DEPLOYMENT_TARGET"
   eval rm -rf bower_components
   echo deleted bower components
-  eval ./node_modules/.bin/bower install
-  exitWithMessageOnError "bower failed"
+#   eval ./node_modules/.bin/bower install
+#   exitWithMessageOnError "bower failed"
   cd - > /dev/null
 fi
 
-#8. Unzip file. you can also use -d option to unzip files into particular folder
-cd "$DEPLOYMENT_TARGET"
-eval unzip -o Archive.zip
-cd - > /dev/null
+# #8. Unzip file. you can also use -d option to unzip files into particular folder
+# cd "$DEPLOYMENT_TARGET"
+# eval unzip -o Archive.zip
+# cd - > /dev/null
 
 
 ##################################################################################################################################

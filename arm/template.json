@@ -88,7 +88,7 @@
             },
             "resources": [
                 {
-                    "apiVersion": "2014-04-01",
+                    "apiVersion": "2015-08-01",
                     "type": "config",
                     "name": "web",
                     "dependsOn": [
@@ -112,8 +112,7 @@
                 "name": "web",
                  "type": "sourcecontrols",
                  "dependsOn": [
-                        "[resourceId('Microsoft.Web/Sites', variables('sites_explorerweb_name'))]",
-                        "[resourceId('Microsoft.Web/Sites', variables('sites_explorerweb_name'), 'appsettings')]"
+                        "[resourceId('Microsoft.Web/Sites', variables('sites_explorerweb_name'))]"
                 ],
                 "properties": {
                     "RepoUrl": "[parameters('explorer_repo_url')]",
