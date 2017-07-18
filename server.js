@@ -1,7 +1,16 @@
 'use strict';
 var express = require('express');
+var path = require('path');
 var app = express();
+var port = process.env.PORT || 3000;
 
-app.use(express.static(__dirname + '/app'));
+console.log(path.join(__dirname, '/app'));
+app.use("/app", express.static(path.join(__dirname, "/app")));
 
-app.listen(process.env.PORT || 3000);
+// Set up our one route to the index.html file.
+app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname + '/app/index.html'));
+});
+// Start the server.
+app.listen(port);
+console.log('Listening on port ' + port + '...');
