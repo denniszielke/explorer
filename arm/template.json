@@ -90,34 +90,27 @@
                 {
                     "apiVersion": "2015-08-01",
                     "type": "config",
-                    "name": "web",
+                    "name": "appsettings",
                     "dependsOn": [
                         "[resourceId('microsoft.web/sites/', variables('sites_explorerweb_name'))]"
                     ],
                     "properties": {
-                        "appSettings": [
-                            {
-                                "Value": "6.9.1",
-                                "Name": "WEBSITE_NODE_DEFAULT_VERSION"
-                            },
-                            {
-                                "Value": "[parameters('eth_rpc_endpoint')]",
-                                "Name": "ETH_RPC_ENDPOINT"
-                            }
-                        ]
+                        "WEBSITE_NODE_DEFAULT_VERSION" : "6.9.1",
+                        "ETH_RPC_ENDPOINT": "[parameters('eth_rpc_endpoint')]"
                     }
                 },
                 {
-                "apiVersion": "2015-08-01",
-                "name": "web",
-                 "type": "sourcecontrols",
-                 "dependsOn": [
-                        "[resourceId('Microsoft.Web/Sites', variables('sites_explorerweb_name'))]"
-                ],
-                "properties": {
-                    "RepoUrl": "[parameters('explorer_repo_url')]",
-                    "branch": "master",
-                    "IsManualIntegration": true
+                    "apiVersion": "2015-08-01",
+                    "name": "web",
+                    "type": "sourcecontrols",
+                    "dependsOn": [
+                            "[resourceId('Microsoft.Web/Sites', variables('sites_explorerweb_name'))]",
+                            "[resourceId('Microsoft.Web/Sites', variables('sites_explorerweb_name'), 'appsettings')]"
+                    ],
+                    "properties": {
+                        "RepoUrl": "[parameters('explorer_repo_url')]",
+                        "branch": "master",
+                        "IsManualIntegration": true
                     }
                 }
             ],
