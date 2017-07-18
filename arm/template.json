@@ -1,0 +1,135 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "deployment_name": {
+            "defaultValue": "dz1",
+            "type": "string",
+            "metadata": {
+                "description": "Short name of the deployment to ensure no name collisions"
+            }
+        },
+        "explorer_repo_url": {
+            "type": "string",
+            "defaultValue": "https://github.com/denniszielke/explorer.git",
+            "metadata": {
+                "description": "The URL for the GitHub repository that contains the project to deploy."
+            }
+        },
+        "eth_rpc_endpoint": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Enter the Ethereum RPC endpoint adress"
+            }
+        }        
+    },
+    "variables": {
+        "serverfarms_explorerplan_name": "[concat(parameters('deployment_name'), 'ethexplorerplan')]",
+        "sites_explorerweb_name": "[concat(parameters('deployment_name'), 'ethexplorer')]"
+    },
+    "resources": [
+        {
+            "comments": "Generalized from resource:",
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                    "name": "B1",
+                    "tier": "Basic",
+                    "size": "B1",
+                    "family": "B",
+                    "capacity": 1
+            },
+            "kind": "app",
+            "name": "[variables('serverfarms_explorerplan_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "name": "[variables('serverfarms_explorerplan_name')]",
+                "numberOfWorkers": 0
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: .",
+            "type": "Microsoft.Web/sites",
+            "kind": "app",
+            "name": "[variables('sites_explorerweb_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "scale": null,
+            "properties": {
+                "name": "[variables('sites_explorerweb_name')]",
+                "hostNames": [
+                    "[concat(variables('sites_explorerweb_name'),'.azurewebsites.net')]"
+                ],
+                "enabledHostNames": [
+                    "[concat(variables('sites_explorerweb_name'),'.azurewebsites.net')]",
+                    "[concat(variables('sites_explorerweb_name'),'.scm.azurewebsites.net')]"
+                ],
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(variables('sites_explorerweb_name'),'.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    },
+                    {
+                        "name": "[concat(variables('sites_explorerweb_name'),'.scm.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_explorerplan_name'))]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2014-04-01",
+                    "type": "config",
+                    "name": "web",
+                    "dependsOn": [
+                        "[resourceId('microsoft.web/sites/', variables('sites_explorerweb_name'))]"
+                    ],
+                    "properties": {
+                        "appSettings": [
+                            {
+                                "Value": "6.9.1",
+                                "Name": "WEBSITE_NODE_DEFAULT_VERSION"
+                            },
+                            {
+                                "Value": "[parameters('eth_rpc_endpoint')]",
+                                "Name": "ETH_RPC_ENDPOINT"
+                            }
+                        ]
+                    }
+                },
+                {
+                "apiVersion": "2015-08-01",
+                "name": "web",
+                 "type": "sourcecontrols",
+                 "dependsOn": [
+                        "[resourceId('Microsoft.Web/Sites', variables('sites_explorerweb_name'))]"
+                ],
+                "properties": {
+                    "RepoUrl": "[parameters('explorer_repo_url')]",
+                    "branch": "master",
+                    "IsManualIntegration": true
+                    }
+                }
+            ],
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_explorerplan_name'))]"
+            ]
+        }    
+    ],
+    "outputs": {
+        "EXPLORER_WEB_URL" : {
+            "type" : "string",
+            "value": "[concat('https://', variables('sites_explorerweb_name'),'.azurewebsites.net/')]"
+        }
+    }
+}

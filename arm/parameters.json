@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "deployment_name": {
+            "value": "dz11"
+        },
+        "explorer_repo_url": {
+            "value": "https://github.com/denniszielke/hackbotsimple.git"
+        },
+        "eth_rpc_endpoint": {
+            "value": null
+        }
+    }
+}
