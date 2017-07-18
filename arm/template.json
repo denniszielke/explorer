@@ -103,10 +103,6 @@
                         {
                             "name": "ETH_RPC_ENDPOINT",
                             "value": "[parameters('eth_rpc_endpoint')]"
-                        },
-                        {
-                            "name": "PORT",
-                            "value": "80"
                         }
                         ]
                     }
