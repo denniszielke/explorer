@@ -117,6 +117,8 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd - > /dev/null
 fi
 
+echo "writing eth rpc endpoint adress"
+echo "$ETH_RPC_ENDPOINT"
 
 # 4. Install Bower modules
 if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
@@ -133,8 +135,6 @@ cd "$DEPLOYMENT_TARGET"
 eval unzip -o Archive.zip
 cd - > /dev/null
 
-echo "writing eth rpc endpoint adress"
-echo "$ETH_RPC_ENDPOINT"
 
 ##################################################################################################################################
 
