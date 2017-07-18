@@ -120,9 +120,9 @@ fi
 echo "writing eth rpc endpoint adress"
 echo "$ETH_RPC_ENDPOINT"
 
-REMOTEURL = "window.remoteRpcUrl = '$ETH_RPC_ENDPOINT';";
+$REMOTEURL = "window.remoteRpcUrl = '$ETH_RPC_ENDPOINT';";
 
-echo REMOTEURL > "$DEPLOYMENT_TARGET/app/rpc.js"
+echo $REMOTEURL > "$DEPLOYMENT_TARGET/app/rpc.js"
 
 # 4. Install Bower modules
 if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
