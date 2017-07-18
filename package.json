@@ -20,7 +20,8 @@
         "shelljs": "^0.2.6"
     },
     "scripts": {
-        "postinstall": "bower install",
+        "postinstall": "npm install && bower install",
+        "install": "npm install",
         "prestart": "npm install",
         "start": "node server.js",
         "pretest": "npm install",
